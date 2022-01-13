@@ -71,6 +71,7 @@ const Review = () => {
       </div>
       <form onSubmit={handleCommentSubmit}>
         <input
+          disabled={!isLoggedIn}
           type="text"
           value={body}
           onChange={(event) => {
@@ -78,7 +79,11 @@ const Review = () => {
           }}
         ></input>
         <br />
-        <button>Submit Comment</button>
+        {isLoggedIn ? (
+          <button>Submit Comment</button>
+        ) : (
+          <button>login to submit comment</button>
+        )}
         {emptyBody ? <p>"need input</p> : null}
       </form>
     </>

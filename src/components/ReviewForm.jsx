@@ -4,9 +4,10 @@ import ErrorPage from "./ErrorPage";
 import { UserContext } from "../contexts/user";
 import { CategoryContext } from "../contexts/category";
 import { getCategories } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const ReviewForm = () => {
-  const { user } = useContext(UserContext);
+  const { user, isLoggedIn } = useContext(UserContext);
   const [review_body, setReview_Body] = useState("");
   const [category, setCategory] = useState("");
   const [designer, setDesigner] = useState("");
@@ -16,11 +17,13 @@ const ReviewForm = () => {
   const { categories, setCategories } = useContext(CategoryContext);
   const [emptyForm, setEmptyForm] = useState(false);
   const [sentForm, setSentForm] = useState(false);
+  const navigate = useNavigate();
 
   const handleReviewSubmit = (event) => {
     event.preventDefault();
-
-    if (
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else if (
       title !== "" &&
       designer !== "" &&
       category !== "" &&
@@ -64,6 +67,7 @@ const ReviewForm = () => {
       <form onSubmit={handleReviewSubmit}>
         <label htmlFor="title">Title:</label>
         <input
+          disabled={!isLoggedIn}
           type="text"
           value={title}
           onChange={(event) => {
@@ -74,6 +78,7 @@ const ReviewForm = () => {
         <br />
         <label htmlFor="review_body">Body:</label>
         <input
+          disabled={!isLoggedIn}
           type="text"
           value={review_body}
           onChange={(event) => {
@@ -84,6 +89,7 @@ const ReviewForm = () => {
         <br />
         <label htmlFor="designer">Designer:</label>
         <input
+          disabled={!isLoggedIn}
           type="text"
           value={designer}
           onChange={(event) => {
@@ -93,6 +99,7 @@ const ReviewForm = () => {
         <br />
         <br />
         <select
+          disabled={!isLoggedIn}
           defaultValue="Choose category"
           onChange={(event) => {
             setCategory(event.target.value);
@@ -113,7 +120,11 @@ const ReviewForm = () => {
         </select>
 
         <br />
-        <button>Submit Review</button>
+        {isLoggedIn ? (
+          <button>Submit Reviews</button>
+        ) : (
+          <button>login to submit comment</button>
+        )}
         {emptyForm ? <p>all areas need to be filled in</p> : null}
         {sentForm && <p>SUBMITTED {review.title}</p>}
       </form>
