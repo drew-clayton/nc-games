@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getCategories, getReviews } from "../utils/api";
+import { CategoryContext } from "../contexts/category";
 
 const ReviewFilter = ({ setReviews }) => {
-  const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
   const [sortBy, setSortBy] = useState();
   const [orderButton, setOrderButton] = useState(true);
+  const { setCategories, categories } = useContext(CategoryContext);
 
   const sortArr = ["created_at", "votes", "comment_count"];
 
@@ -41,11 +42,11 @@ const ReviewFilter = ({ setReviews }) => {
     });
   };
 
-  useEffect(() => {
-    return getCategories().then((res) => {
-      setCategories(res);
-    });
-  }, []);
+  // useEffect(() => {
+  //   return getCategories().then((res) => {
+  //     setCategories(res);
+  //   });
+  // }, []);
 
   return (
     <div>

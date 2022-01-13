@@ -44,3 +44,9 @@ export const postComment = (id, { username }, { body }) => {
 export const deleteComment = (id) => {
   return marketApi.delete(`/comments/${id}`);
 };
+
+export const postReview = (obj) => {
+  return marketApi.post(`/reviews`, obj).then((res) => {
+    return res.data.review;
+  });
+};

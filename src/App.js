@@ -9,8 +9,17 @@ import LoginPage from "./components/LoginPage";
 import ErrorPage from "./components/ErrorPage";
 import CommentList from "./components/CommentsList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { getCategories } from "./utils/api";
+import { CategoryContext } from "./contexts/category";
 
 function App() {
+  const { setCategories } = useContext(CategoryContext);
+  useEffect(() => {
+    return getCategories().then((res) => {
+      setCategories(res);
+    });
+  }, []);
   return (
     <BrowserRouter>
       <Header />

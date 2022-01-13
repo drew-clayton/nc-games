@@ -44,7 +44,7 @@ const LoginPage = () => {
           ></input>
         </label>
         <button>Login</button>
-        {newUser ? <p>"not a user</p> : null}
+        {newUser && <p>"not a user</p>}
       </form>
     </>
   );

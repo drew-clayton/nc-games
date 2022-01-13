@@ -13,6 +13,8 @@ const Review = () => {
   const { user } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [body, setBody] = useState("");
+  const [emptyBody, setEmptyBody] = useState(false);
+
   const { review_id } = useParams();
   const [error, setError] = useState(null);
 
@@ -22,14 +24,18 @@ const Review = () => {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    return postComment(review_id, user, { body })
-      .then((res) => {
-        setComments((curr) => [...curr, res]);
-        setBody("");
-      })
-      .catch((err) => {
-        setError({ err });
-      });
+    if (body !== "") {
+      return postComment(review_id, user, { body })
+        .then((res) => {
+          setComments((curr) => [...curr, res]);
+          setBody("");
+        })
+        .catch((err) => {
+          setError({ err });
+        });
+    } else {
+      setEmptyBody(true);
+    }
   };
 
   /* -------------------------------------------------------------------------- */
@@ -70,6 +76,7 @@ const Review = () => {
         ></input>
         <br />
         <button>Submit Comment</button>
+        {emptyBody ? <p>"need input</p> : null}
       </form>
     </>
   );

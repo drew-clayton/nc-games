@@ -1,24 +1,120 @@
+import { useState, useEffect, useContext } from "react";
+import { postReview } from "../utils/api";
+import ErrorPage from "./ErrorPage";
+import { UserContext } from "../contexts/user";
+import { CategoryContext } from "../contexts/category";
+import { getCategories } from "../utils/api";
+
 const ReviewForm = () => {
+  const { user } = useContext(UserContext);
+  const [review_body, setReview_Body] = useState("");
+  const [category, setCategory] = useState("");
+  const [designer, setDesigner] = useState("");
+  const [title, setTitle] = useState("");
+  const [review, setReview] = useState([]);
+  const [error, setError] = useState(null);
+  const { categories, setCategories } = useContext(CategoryContext);
+  const [emptyForm, setEmptyForm] = useState(false);
+  const [sentForm, setSentForm] = useState(false);
+
+  const handleReviewSubmit = (event) => {
+    event.preventDefault();
+    if (
+      title !== "" &&
+      designer !== "" &&
+      category !== "" &&
+      review_body !== ""
+    ) {
+      return postReview({
+        owner: user.username,
+        review_body,
+        category,
+        designer,
+        title,
+      })
+        .then((res) => {
+          console.log("res: ", res);
+          setReview(res);
+          setReview_Body("");
+          setCategory("");
+          setDesigner("");
+          setTitle("");
+          setSentForm(true);
+        })
+        .catch((err) => {
+          setError({ err });
+        });
+    } else {
+      setEmptyForm(true);
+    }
+  };
+
+  // useEffect(() => {
+  //   return getCategories().then((res) => {
+  //     setCategories(res);
+  //   });
+  // }, []);
+
+  if (error) {
+    return <ErrorPage message={error.body.msg} />;
+  }
   return (
     <>
-      <form>
+      <form onSubmit={handleReviewSubmit}>
         <label htmlFor="title">Title:</label>
-        <input type="text" />
+        <input
+          type="text"
+          value={title}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+        />
         <br />
         <br />
         <label htmlFor="review_body">Body:</label>
-        <input type="text" />
+        <input
+          type="text"
+          value={review_body}
+          onChange={(event) => {
+            setReview_Body(event.target.value);
+          }}
+        />
         <br />
         <br />
         <label htmlFor="designer">Designer:</label>
-        <input type="text" />
+        <input
+          type="text"
+          value={designer}
+          onChange={(event) => {
+            setDesigner(event.target.value);
+          }}
+        />
         <br />
         <br />
-        <label htmlFor="category">Category:</label>
-        <input type="text" />
+        <select
+          defaultValue="Choose category"
+          onChange={(event) => {
+            setCategory(event.target.value);
+          }}
+          name="category"
+          id="category"
+        >
+          <option value="Choose category" disabled>
+            Choose Category
+          </option>
+          {categories.map((category) => {
+            return (
+              <option key={category.slug} value={category.slug}>
+                {category.slug}
+              </option>
+            );
+          })}
+        </select>
+
         <br />
-        <br />
-        <button>submit</button>
+        <button>Submit Review</button>
+        {emptyForm ? <p>all areas need to be filled in</p> : null}
+        {sentForm && <p>SUBMITTED </p>}
       </form>
     </>
   );
