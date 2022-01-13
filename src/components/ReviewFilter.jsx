@@ -5,18 +5,20 @@ const ReviewFilter = ({ setReviews }) => {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
   const [sortBy, setSortBy] = useState();
+  const [orderButton, setOrderButton] = useState(true);
 
   const sortArr = ["created_at", "votes", "comment_count"];
 
   const handleFilterSelect = (event) => {
     event.preventDefault();
+    setOrderButton(true);
     if (event.target.value === "all") {
-      return getReviews().then((res) => {
+      return getReviews(category, sortBy).then((res) => {
         setReviews(res);
         setCategory(undefined);
       });
     } else {
-      return getReviews(event.target.value).then((res) => {
+      return getReviews(event.target.value, sortBy).then((res) => {
         setReviews(res);
         setCategory(event.target.value);
       });
@@ -24,6 +26,7 @@ const ReviewFilter = ({ setReviews }) => {
   };
   const handleSortBySelect = (event) => {
     event.preventDefault();
+    setOrderButton(true);
     return getReviews(category, event.target.value).then((res) => {
       setReviews(res);
       setSortBy(event.target.value);
@@ -32,6 +35,7 @@ const ReviewFilter = ({ setReviews }) => {
 
   const handleOrderClick = (event) => {
     event.preventDefault();
+    setOrderButton((curr) => !curr);
     return getReviews(category, sortBy, event.target.value).then((res) => {
       setReviews(res);
     });
@@ -65,7 +69,7 @@ const ReviewFilter = ({ setReviews }) => {
           })}
         </select>
         <select
-          defaultValue="Sort By"
+          defaultValue="Created_at"
           onChange={handleSortBySelect}
           name="Sort By"
           id="Sort By"
@@ -81,12 +85,15 @@ const ReviewFilter = ({ setReviews }) => {
             );
           })}
         </select>
-        <button onClick={handleOrderClick} value="ASC">
-          ASC
-        </button>
-        <button onClick={handleOrderClick} value="DESC">
-          DESC
-        </button>
+        {orderButton ? (
+          <button onClick={handleOrderClick} value="ASC">
+            ASC
+          </button>
+        ) : (
+          <button onClick={handleOrderClick} value="DESC">
+            DESC
+          </button>
+        )}
       </form>
     </div>
   );

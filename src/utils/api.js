@@ -26,3 +26,21 @@ export const getComments = (id) => {
     return res.data.comments;
   });
 };
+
+export const patchVote = (id, inc_votes) => {
+  return marketApi
+    .patch(`/reviews/${id}`, { inc_votes })
+    .then((res) => res.data.review);
+};
+
+export const postComment = (id, { username }, { body }) => {
+  return marketApi
+    .post(`/reviews/${id}/comments`, { username, body })
+    .then((res) => {
+      return res.data.comment;
+    });
+};
+
+export const deleteComment = (id) => {
+  return marketApi.delete(`/comments/${id}`);
+};

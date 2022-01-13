@@ -6,32 +6,26 @@ import ReviewsList from "./components/ReviewsList";
 import ReviewForm from "./components/ReviewForm";
 import Review from "./components/Review";
 import LoginPage from "./components/LoginPage";
-
+import ErrorPage from "./components/ErrorPage";
 import CommentList from "./components/CommentsList";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserProvider } from "./contexts/user";
 
 function App() {
   return (
-    <UserProvider>
-      <BrowserRouter>
-        <Header />
-        <Navbar />
-        <Routes>
-          <Route path="/reviews" element={<ReviewsList />} />
-          <Route path="/" element={<ReviewsList />} />
-          <Route path="/users" element={<UsersList />} />
-          <Route path="/review_form" element={<ReviewForm />} />
-          <Route path="/reviews/:review_id" element={<Review />} />
-          <Route
-            path="/reviews/:review_id/comments"
-            element={<CommentList />}
-          />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
-    </UserProvider>
+    <BrowserRouter>
+      <Header />
+      <Navbar />
+      <Routes>
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/reviews" element={<ReviewsList />} />
+        <Route path="/" element={<ReviewsList />} />
+        <Route path="/users" element={<UsersList />} />
+        <Route path="/review_form" element={<ReviewForm />} />
+        <Route path="/reviews/:review_id" element={<Review />} />
+        <Route path="/reviews/:review_id/comments" element={<CommentList />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

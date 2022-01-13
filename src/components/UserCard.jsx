@@ -1,5 +1,5 @@
-const UserCard = ({ user }) => {
-  return <div>username: {user.username}</div>;
+const UserCard = () => {
+  return <div>username:</div>;
 };
 
 export default UserCard;

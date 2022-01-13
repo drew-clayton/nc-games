@@ -1,12 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/user";
+import { useNavigate } from "react-router-dom";
+import { getUsers } from "../utils/api";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
+  const [newUser, setNewUser] = useState(false);
+  const [users, setUsers] = useState([]);
   const { setUser } = useContext(UserContext);
+  useEffect(() => {
+    return getUsers().then((res) => setUsers(res));
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUser({ username });
+    if (
+      users
+        .map((obj) => {
+          return obj.username;
+        })
+        .includes(username)
+    ) {
+      setUser({ username });
+      navigate(-1);
+    } else {
+      setNewUser(true);
+    }
   };
 
   return (
@@ -23,6 +44,7 @@ const LoginPage = () => {
           ></input>
         </label>
         <button>Login</button>
+        {newUser ? <p>"not a user</p> : null}
       </form>
     </>
   );
