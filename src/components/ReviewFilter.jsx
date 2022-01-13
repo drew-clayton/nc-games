@@ -42,11 +42,11 @@ const ReviewFilter = ({ setReviews }) => {
     });
   };
 
-  // useEffect(() => {
-  //   return getCategories().then((res) => {
-  //     setCategories(res);
-  //   });
-  // }, []);
+  useEffect(() => {
+    return getCategories().then((res) => {
+      setCategories(res);
+    });
+  }, []);
 
   return (
     <div>

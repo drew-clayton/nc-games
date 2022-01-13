@@ -1,9 +1,3 @@
-6. post a new comment to an existing review (as a default logged in user. e.g. 'jessjelly').
-
-**Error-handling: As a user, I should...**
-
-10. not be allowed to post a comment if I have not filled in all of the form boxes. -- same for review
-
 **As a hiring partner, I should be able to...**
 
 11. use the site on my mobile without sacrificing style or functionality (as I may not have my laptop nearby).

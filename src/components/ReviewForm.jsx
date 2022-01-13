@@ -19,6 +19,7 @@ const ReviewForm = () => {
 
   const handleReviewSubmit = (event) => {
     event.preventDefault();
+
     if (
       title !== "" &&
       designer !== "" &&
@@ -49,11 +50,11 @@ const ReviewForm = () => {
     }
   };
 
-  // useEffect(() => {
-  //   return getCategories().then((res) => {
-  //     setCategories(res);
-  //   });
-  // }, []);
+  useEffect(() => {
+    return getCategories().then((res) => {
+      setCategories(res);
+    });
+  }, []);
 
   if (error) {
     return <ErrorPage message={error.body.msg} />;
@@ -114,7 +115,7 @@ const ReviewForm = () => {
         <br />
         <button>Submit Review</button>
         {emptyForm ? <p>all areas need to be filled in</p> : null}
-        {sentForm && <p>SUBMITTED </p>}
+        {sentForm && <p>SUBMITTED {review.title}</p>}
       </form>
     </>
   );

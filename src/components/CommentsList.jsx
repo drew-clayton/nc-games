@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getComments, postComment } from "../utils/api";
 import CommentCard from "./CommentCard";
 import { UserContext } from "../contexts/user";
@@ -10,13 +10,14 @@ import ErrorPage from "./ErrorPage";
 /* -------------------------------------------------------------------------- */
 
 const Review = () => {
-  const { user } = useContext(UserContext);
+  const { user, isLoggedIn } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [body, setBody] = useState("");
   const [emptyBody, setEmptyBody] = useState(false);
-
   const { review_id } = useParams();
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   /* -------------------------------------------------------------------------- */
   //* Event Listeners */
@@ -24,7 +25,9 @@ const Review = () => {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    if (body !== "") {
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else if (body !== "") {
       return postComment(review_id, user, { body })
         .then((res) => {
           setComments((curr) => [...curr, res]);
