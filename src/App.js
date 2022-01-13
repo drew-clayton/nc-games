@@ -1,5 +1,4 @@
 import "./App.css";
-import Header from "./components/Header";
 import Navbar from "./components/Nav";
 import UsersList from "./components/UsersList";
 import ReviewsList from "./components/ReviewsList";
@@ -22,7 +21,6 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      <Header />
       <Navbar />
       <Routes>
         <Route path="*" element={<ErrorPage />} />

@@ -5,3 +5,8 @@
 13. find a link to the hosted version of the project in the readme. (use a placeholder if not yet hosted!)
 14. find a link to the back-end repository of the project in the readme.
 15. find a link to the hosted version of the back-end project in the readme.
+
+https://myncgames.herokuapp.com/api
+
+Local: http://localhost:3000
+On Your Network: http://10.0.0.16:3000

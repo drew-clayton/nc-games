@@ -27,18 +27,17 @@ const ReviewsList = () => {
   }
   return (
     <>
-      <h1>Reviews</h1>
       {isLoading ? (
         <p>loading...</p>
       ) : (
         <>
           <ReviewFilter setReviews={setReviews} reviews={reviews} />
           <ReviewPagination />
-          <>
+          <div className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-3">
             {reviews.map((review) => {
               return <ReviewCard key={review.review_id} review={review} />;
             })}
-          </>
+          </div>
         </>
       )}
     </>
