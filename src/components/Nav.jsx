@@ -4,7 +4,6 @@ import { UserContext } from "../contexts/user";
 
 const Navbar = () => {
   const { isLoggedIn, user, logOut } = useContext(UserContext);
-
   return (
     <nav
       className="flex justify-between items-center h-16 bg-blue-100 text-black relative shadow-sm font-mono"
@@ -13,6 +12,12 @@ const Navbar = () => {
       <Link className="pl-8 font-mono" to="/">
         NC Game Reviews
       </Link>
+      {isLoggedIn && (
+        <Link className="pl-8 font-mono text-green-600" to="/">
+          👋 {user.username}
+        </Link>
+      )}
+
       <div className="px-4 cursor-pointer md:hidden">
         <svg
           className="w-6 h-6"
@@ -32,19 +37,19 @@ const Navbar = () => {
       </div>
       <nav className="pr-8 md:block hidden">
         <Link
-          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline"
+          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
           to="/reviews"
         >
           Reviews
         </Link>
         <Link
-          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline"
+          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
           to="/users"
         >
           Users
         </Link>
         <Link
-          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline"
+          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
           to="/"
         >
           Categories
@@ -53,7 +58,7 @@ const Navbar = () => {
         {isLoggedIn ? (
           <>
             <Link
-              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline"
+              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
               to="/review_form"
             >
               Add Review
@@ -63,13 +68,13 @@ const Navbar = () => {
         ) : (
           <>
             <Link
-              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline"
+              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
               to="/"
             >
               Sign Up
             </Link>
             <Link
-              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline"
+              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
               to="/login"
             >
               Login

@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 const ReviewCard = ({ review }) => {
   return (
-    <div>
-      <Link to={`/reviews/${review.review_id}`}>{review.title}</Link>
+    <div className="p-4">
       <Link to={`/reviews/${review.review_id}`}>
         <div className="w-10/12">
           <img
@@ -10,6 +9,9 @@ const ReviewCard = ({ review }) => {
             src={review.review_img_url}
             alt=""
           />
+          <Link className="text-[20px]" to={`/reviews/${review.review_id}`}>
+            {review.title}
+          </Link>
         </div>
       </Link>
       <Link to={`/users`}>By {review.owner}</Link>
@@ -30,9 +32,6 @@ const ReviewCard = ({ review }) => {
           />
         </svg>
       </div>
-      Comments: {review.comment_count}
-      <br />
-      <br />
     </div>
   );
 };

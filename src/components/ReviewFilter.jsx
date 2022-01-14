@@ -14,7 +14,7 @@ const ReviewFilter = ({ setReviews }) => {
     event.preventDefault();
     setOrderButton(true);
     if (event.target.value === "all") {
-      return getReviews(category, sortBy).then((res) => {
+      return getReviews(undefined, sortBy).then((res) => {
         setReviews(res);
         setCategory(undefined);
       });

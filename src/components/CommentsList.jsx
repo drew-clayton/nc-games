@@ -56,8 +56,7 @@ const Review = () => {
     return <ErrorPage message={error.body.msg} />;
   }
   return (
-    <>
-      <h1>Comments</h1>
+    <div className="px-5 pt-5 mx-10 border-double border-4 border-black bg-zinc-100">
       <div>
         {comments.map((comment) => {
           return (
@@ -71,6 +70,7 @@ const Review = () => {
       </div>
       <form onSubmit={handleCommentSubmit}>
         <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           disabled={!isLoggedIn}
           type="text"
           value={body}
@@ -86,7 +86,7 @@ const Review = () => {
         )}
         {emptyBody ? <p>"need input</p> : null}
       </form>
-    </>
+    </div>
   );
 };
 
