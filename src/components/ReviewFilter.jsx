@@ -51,7 +51,7 @@ const ReviewFilter = ({ setReviews }) => {
   }, []);
 
   return (
-    <div>
+    <div className="flex justify-end pt-5 px-10">
       <form>
         <select
           defaultValue="Choose category"
