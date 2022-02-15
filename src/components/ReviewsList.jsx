@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
-import { getReviews } from "../utils/api";
-import ReviewFilter from "./ReviewFilter";
-import ReviewPagination from "./ReviewPagination";
-import ReviewCard from "./ReviewCard";
-import ErrorPage from "./ErrorPage";
+import { useState, useEffect } from 'react';
+import { getReviews } from '../utils/api';
+import ReviewFilter from './ReviewFilter';
+import ReviewCard from './ReviewCard';
+import ErrorPage from './ErrorPage';
 
 const ReviewsList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,8 +31,7 @@ const ReviewsList = () => {
       ) : (
         <>
           <ReviewFilter setReviews={setReviews} reviews={reviews} />
-          <ReviewPagination />
-          <div className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-3">
+          <div className='grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-3'>
             {reviews.map((review) => {
               return <ReviewCard key={review.review_id} review={review} />;
             })}

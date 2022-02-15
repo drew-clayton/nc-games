@@ -1,6 +1,5 @@
 import "./App.css";
 import Navbar from "./components/Nav";
-import UsersList from "./components/UsersList";
 import ReviewsList from "./components/ReviewsList";
 import ReviewForm from "./components/ReviewForm";
 import Review from "./components/Review";
@@ -8,17 +7,8 @@ import LoginPage from "./components/LoginPage";
 import ErrorPage from "./components/ErrorPage";
 import CommentList from "./components/CommentsList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, useContext } from "react";
-import { getCategories } from "./utils/api";
-import { CategoryContext } from "./contexts/category";
 
 function App() {
-  const { setCategories } = useContext(CategoryContext);
-  useEffect(() => {
-    return getCategories().then((res) => {
-      setCategories(res);
-    });
-  }, []);
   return (
     <BrowserRouter>
       <Navbar />
@@ -26,7 +16,6 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/reviews" element={<ReviewsList />} />
         <Route path="/" element={<ReviewsList />} />
-        <Route path="/users" element={<UsersList />} />
         <Route path="/review_form" element={<ReviewForm />} />
         <Route path="/reviews/:review_id" element={<Review />} />
         <Route path="/reviews/:review_id/comments" element={<CommentList />} />

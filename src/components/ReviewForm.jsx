@@ -12,7 +12,6 @@ const ReviewForm = () => {
   const [category, setCategory] = useState("");
   const [designer, setDesigner] = useState("");
   const [title, setTitle] = useState("");
-  const [review, setReview] = useState([]);
   const [error, setError] = useState(null);
   const { categories, setCategories } = useContext(CategoryContext);
   const [emptyForm, setEmptyForm] = useState(false);
@@ -37,13 +36,12 @@ const ReviewForm = () => {
         title,
       })
         .then((res) => {
-          console.log("res: ", res);
-          setReview(res);
           setReview_Body("");
           setCategory("");
           setDesigner("");
           setTitle("");
           setSentForm(true);
+          setEmptyForm(false)
         })
         .catch((err) => {
           setError({ err });
@@ -57,7 +55,7 @@ const ReviewForm = () => {
     return getCategories().then((res) => {
       setCategories(res);
     });
-  }, []);
+  }, [setCategories]);
 
   if (error) {
     return <ErrorPage message={error.body.msg} />;
@@ -65,9 +63,9 @@ const ReviewForm = () => {
   return (
     <div className="mt-0">
       <form onSubmit={handleReviewSubmit}>
-        <div className="px-4 py-5 bg-gray-100">
+        <div className="px-4 py-5 bg-white-100">
           <div className="grid grid-cols-1 gap-6">
-            <div>
+            <div className="md:col-span-6 col-span-4">
               <label
                 htmlFor="title"
                 className="block text-sm font-medium text-gray-700"
@@ -83,18 +81,18 @@ const ReviewForm = () => {
                 type="text"
                 name="title"
                 id="title"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full md:w-6/12  shadow-sm sm:text-sm border-gray-300 rounded-md"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full md:w-6/12  shadow-sm sm:text-sm border-gray-300 rounded-md border"
               />
             </div>
 
-            <div className="col-span-6 sm:col-span-4">
+            <div className="md:col-span-6 col-span-4">
               <label
                 htmlFor="review_body"
                 className="block text-sm font-medium text-gray-700"
               >
                 Review
               </label>
-              <div className="mt-1">
+              <div className="mt-1 block w-full md:w-6/12">
                 <textarea
                   disabled={!isLoggedIn}
                   type="text"
@@ -105,12 +103,12 @@ const ReviewForm = () => {
                   id="about"
                   name="about"
                   rows={3}
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md border"
                 />
               </div>
             </div>
 
-            <div className="col-span-6 sm:col-span-4">
+            <div className="md:col-span-6 col-span-4">
               <label
                 htmlFor="designer"
                 className="block text-sm font-medium text-gray-700"
@@ -126,11 +124,11 @@ const ReviewForm = () => {
                 type="text"
                 name="name"
                 id="name"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full md:w-6/12  shadow-sm sm:text-sm border-gray-300 rounded-md"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full md:w-6/12  shadow-sm sm:text-sm border-gray-300 rounded-md border"
               />
             </div>
 
-            <div className="col-span-6 sm:col-span-4">
+            <div className="md:col-span-6 col-span-4">
               <label
                 htmlFor="category"
                 className="block text-sm font-medium text-gray-700"
@@ -164,20 +162,20 @@ const ReviewForm = () => {
             {isLoggedIn ? (
               <button
                 type="submit"
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Submit Review
               </button>
             ) : (
               <button
                 type="submit"
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Login to submit Review
               </button>
             )}
-            {emptyForm ? <p>all areas need to be filled in</p> : null}
-            {sentForm && <p>SUBMITTED {review.title}</p>}
+            {emptyForm ? <p className="text-red-600">*All areas need to be filled in</p> : null}
+            {sentForm && <p className="text-lime-600">Your review has been submitted!!</p>}
           </div>
         </div>
       </form>

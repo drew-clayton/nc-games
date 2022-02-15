@@ -1,12 +1,24 @@
-import { useContext } from "react";
+import { useContext,useState  } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/user";
+import { slide as Menu } from 'react-burger-menu'
+
 
 const Navbar = () => {
   const { isLoggedIn, user, logOut } = useContext(UserContext);
+  const [menuState, setMenuState] = useState(false);
+
+   function closeMenu (event) {
+    setMenuState(false)
+  }
+
+  function handleStateChange (state) {
+    setMenuState(state.isOpen);
+  }
+  
   return (
     <nav
-      className="flex justify-between items-center h-16 bg-blue-100 text-black relative shadow-sm font-mono"
+      className="flex justify-between items-center h-16 bg-blue-200 text-black shadow-sm font-mono sticky top-0 z-50"
       role="navigation"
     >
       <Link className="pl-8 font-mono" to="/">
@@ -19,62 +31,56 @@ const Navbar = () => {
       )}
 
       <div className="px-4 cursor-pointer md:hidden">
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fas"
-          data-icon="bars"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
+        <Menu disableAutoFocus right styles={ styles } isOpen={menuState} onStateChange={(state) => handleStateChange(state)}>
+          
+        <Link
+          className="rounded-lg px-3 py-1 transition duration-500 hover:bg-gray-100 hover:text-gray-900"
+          to="/reviews" onClick={() => closeMenu()}
         >
-          <path
-            fill="currentColor"
-            d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"
-          ></path>
-        </svg>
+          Reviews
+        </Link>
+        {isLoggedIn ? (
+          <>
+             <Link
+              className="bm-item rounded-lg px-3 py-1 transition duration-500 hover:bg-gray-100 hover:text-gray-900"
+              to="/review_form" onClick={() => closeMenu()}
+            >
+              Add Review
+            </Link>        
+            <br/>
+        <button  className="rounded-lg px-3 py-1 transition duration-500 hover:bg-gray-100 hover:text-gray-900" onClick={() => {logOut();closeMenu()}}>LogOut</button>
+        </>
+        ) : (
+          <Link
+          className="rounded-lg px-3 py-1  transition duration-500 hover:bg-gray-100 hover:text-gray-900"
+          to="/login" onClick={() => closeMenu()}
+        >
+          Login
+        </Link>
+        )}
+        </Menu>
       </div>
       <nav className="pr-8 md:block hidden">
         <Link
-          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
+          className="rounded-lg px-3 py-1 transition duration-500 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
           to="/reviews"
         >
           Reviews
         </Link>
-        <Link
-          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
-          to="/users"
-        >
-          Users
-        </Link>
-        <Link
-          className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
-          to="/"
-        >
-          Categories
-        </Link>
-
         {isLoggedIn ? (
           <>
             <Link
-              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
+              className="rounded-lg px-3 py-1 transition duration-500 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
               to="/review_form"
             >
               Add Review
             </Link>
-            <button onClick={logOut}>LogOut</button>
+            <button className="rounded-lg px-3 py-1  transition duration-500 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4" onClick={logOut}>LogOut</button>
           </>
         ) : (
           <>
             <Link
-              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
-              to="/"
-            >
-              Sign Up
-            </Link>
-            <Link
-              className="rounded-lg px-3 py-1 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
+              className="rounded-lg px-3 py-1  transition duration-500 hover:bg-gray-100 hover:text-gray-900 focus:underline decoration-2 underline-offset-4"
               to="/login"
             >
               Login
@@ -85,5 +91,44 @@ const Navbar = () => {
     </nav>
   );
 };
+
+const styles = {
+  bmBurgerButton: {
+    position: 'fixed',
+    right: '10px',
+    width: '30px',
+    height: '20px',
+    top: '24px'
+  },
+  bmBurgerBars: {
+    background: '#373a47'
+  },
+  bmBurgerBarsHover: {
+    background: '#a90000'
+  },
+  bmCrossButton: {
+    height: '24px',
+    width: '24px'
+  },
+  bmCross: {
+    background: '#bdc3c7'
+  },
+  bmMenuWrap: {
+    height: '20%'
+  },
+  bmMenu: {
+    background: '#2a2a2c',
+    padding: '1em',
+    fontSize: 20
+  },
+  bmItemList: {
+    color: '#b8b7ad',
+  },
+  bmItem: {
+  },
+  bmOverlay: {
+    background: 'rgba(0, 0, 0, 0.3)'
+  }
+}
 
 export default Navbar;

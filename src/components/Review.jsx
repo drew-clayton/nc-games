@@ -12,20 +12,10 @@ const Review = () => {
   const [error, setError] = useState(null);
 
   const { review_id } = useParams();
-
-  const handleUpVoteClick = (event) => {
-    event.preventDefault();
+  const handleVoteClick = (num) => {
     setVoteButton((curr) => !curr);
-    setVote((curr) => (curr += 1));
+    setVote((curr) => (curr += num));
     return patchVote(review_id, 1).then((res) => {
-      setReview(res);
-    });
-  };
-  const handleDownVoteClick = (event) => {
-    event.preventDefault();
-    setVoteButton((curr) => !curr);
-    setVote((curr) => (curr -= 1));
-    return patchVote(review_id, -1).then((res) => {
       setReview(res);
     });
   };
@@ -46,27 +36,27 @@ const Review = () => {
   return (
     <div className="px-2 py-4 flex flex-wrap">
       <img
-        className="h-80 w-20 rounded-[20px] basis-full lg:basis-1/3"
+        className="h-96 w-20 object-cover lg:H-80 rounded-[20px] basis-full lg:basis-1/3 ml-6 mr-6 lg:m-0 p-3"
         src={review.review_img_url}
         alt=""
       />
-      <div className="basis-full lg:basis-2/3">
-        <h2 className="text-[50px]">{review.title}</h2>
+      <div className="basis-full lg:basis-2/3 p-8">
+        <h2 className="text-[30px] lg:text-[40px] lg:max-w-[100%]">{review.title}</h2>
         <Link
           className="capitalize underline decoration-sky-500 decoration-2  text-base"
           to="/users"
         >
           {review.owner}
         </Link>
+        
         <p className="indent-8 py-4">{review.review_body}</p>
-      </div>
-      <div className="basis-full">
+        <div className="basis-full relative">
         <p>Category: {review.category}</p>
         <p>Designer: {review.designer}</p>
         <p>
           Votes: {vote}
           {voteButton ? (
-            <button className="px-2" onClick={handleUpVoteClick}>
+            <button className="px-2" onClick={() => handleVoteClick(1)}>
               {" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +68,7 @@ const Review = () => {
               </svg>
             </button>
           ) : (
-            <button className="px-2" onClick={handleDownVoteClick}>
+            <button className="px-2" onClick={() => handleVoteClick(-1)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -90,6 +80,7 @@ const Review = () => {
             </button>
           )}
         </p>
+      </div>
       </div>
       <div className="basis-full text-center">
         <CommentsList />

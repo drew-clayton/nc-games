@@ -1,16 +1,9 @@
-import { createContext, useEffect, useState } from "react";
-import { getCategories } from "../utils/api";
+import { createContext, useState } from "react";
 
 export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
-  const [categories, setCategories] = useState();
-
-  useEffect(() => {
-    return getCategories().then((res) => {
-      setCategories(res);
-    });
-  }, []);
+  const [categories, setCategories] = useState([]);
 
   return (
     <CategoryContext.Provider

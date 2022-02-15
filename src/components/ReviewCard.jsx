@@ -5,16 +5,14 @@ const ReviewCard = ({ review }) => {
       <Link to={`/reviews/${review.review_id}`}>
         <div className="w-10/12">
           <img
-            className="aspect-[4/3] rounded-[15px]"
+            className="w-full h-56 rounded-[15px] object-cover"
             src={review.review_img_url}
             alt=""
           />
-          <Link className="text-[20px]" to={`/reviews/${review.review_id}`}>
-            {review.title}
-          </Link>
+          {review.title}
         </div>
       </Link>
-      <Link to={`/users`}>By {review.owner}</Link>
+      By {review.owner}
       <div className="flex">
         <p>{review.votes}</p>
         <svg

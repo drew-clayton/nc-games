@@ -1,11 +1,11 @@
 const ErrorPage = (props) => {
   return (
     <>
-      <h1>ErrorPage</h1>
+      <p className="text-red-500 text-center p-10">Something has gone wrong</p>
       {Object.entries(props).length !== 0 ? (
-        <p>{props.message}</p>
+        <p className="text-red-500 text-center p-10">{props.message}</p>
       ) : (
-        <p>404 wrong path</p>
+        <p className="text-red-500 text-center p-10">404 wrong path</p>
       )}
     </>
   );
