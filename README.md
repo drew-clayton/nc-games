@@ -3,7 +3,7 @@
 
 # My First Front End Project
 
-Hosted: ""
+Hosted Link: [https://ncgamereviews.netlify.app](https://ncgamereviews.netlify.app)
 
 <details>
   <summary>Table of Contents</summary>
